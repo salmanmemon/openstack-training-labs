@@ -38,6 +38,39 @@ apt-get install -y --download-only ubuntu-cloud-keyring python-software-properti
 # TO BE ADDED LATER ON.
 
 #service networking restart
+configure_networks(){
+    ## Check if its single node or multi node
+    if [ "$1" == "single-node" ]; then
+        # Copy Single Node interfaces file to /etc/network/
+        echo "Configuring Network for Single Node"
+        mv Templates/interfaces-single /etc/network/interfaces
+
+    else
+        if [ "$1" == "multi-node"]; then
+            ## If it is multi node, check which type of node it is.
+            case "$2" in 
+                "control")
+                    ## Configure network for control node
+                    echo "Configuring Network for Control Node"
+                    mv Templates/interfaces-control /etc/network/interfaces
+                    ;;
+
+                "compute")
+                    ## Configure network for compute node.
+                    echo "Configuring Network for Compute Node"
+                    mv Templates/interfaces-compute /etc/network/interfaces
+                    ;;
+                "network")
+                    ## Configure network for network node.
+                    echo "Configuring Network for Network Node"
+                    mv Templates/interfaces-network /etc/network/interfaces
+                    ;;
+                *)
+                    echo "Invalid Input, cannot figure out which node this is. Error!!!"
+            esac
+        fi
+    fi
+}
 
 # Get (apt-get) all the packages and download them but not install them using
 # the --download-only option.
@@ -48,15 +81,19 @@ apt-get install -y --download-only ubuntu-cloud-keyring python-software-properti
 # internet while deploying openstack.
 
 single_node() {
+    configure_networks
     #Install All package on the given Virtual Machine ...
-    apt-get install -y --download-only mysql-server python-mysqldb rabbitmq-server ntp vlan bridge-utils
-     keystone glance openvswitch-switch openvswitch-datapath-dkms quantum-server quantum-plugin-openvswitch quantum-plugin-openvswitch-agent dnsmasq quantum-dhcp-agent quantum-l3-agent
-      cpu-checker kvm libvirt-bin pm-utils nova-api nova-cert novnc nova-consoleauth nova-scheduler nova-novncproxy nova-doc nova-conductor nova-compute-kvm
-       cinder-api cinder-scheduler cinder-volume iscsitarget open-iscsi iscsitarget-dkms
-        openstack-dashboard memcached
+    apt-get install -y --download-only mysql-server python-mysqldb rabbitmq-server ntp vlan bridge-utils \
+        keystone glance openvswitch-switch openvswitch-datapath-dkms quantum-server quantum-plugin-openvswitch \
+        quantum-plugin-openvswitch-agent dnsmasq quantum-dhcp-agent quantum-l3-agent cpu-checker kvm libvirt-bin \
+        pm-utils nova-api nova-cert novnc nova-consoleauth nova-scheduler nova-novncproxy nova-doc nova-conductor \
+        nova-compute-kvm cinder-api cinder-scheduler cinder-volume iscsitarget open-iscsi iscsitarget-dkms openstack-dashboard memcached
 }
 
 multi_node(){
+    # $2 will be the node defination -- like control node, compute node,
+    # network node.
+    configure_networks
     # Install packages as per the node defination ...
 
     # TO BE DONE.
