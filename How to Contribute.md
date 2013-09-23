@@ -22,6 +22,7 @@ Testing
 
   Either use the Virtual Box Guest Addons Installation via. ISO,
     ```
+      #apt-get install linux-headers-generic
       #mount /dev/cdrom0/ /tmp/cdrom
       #cd /tmp/cdrom/
       #./virtualbox 
@@ -29,5 +30,6 @@ Testing
   Or You May use Ubuntu Repositories for the same
   
     ```
+      #apt-get install linux-headers-generic
       #apt-get --no-install-recommends install virtualbox-guest-additions
     ```
