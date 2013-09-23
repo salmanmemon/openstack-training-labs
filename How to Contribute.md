@@ -1,6 +1,7 @@
 How to contribute
 =================
 
+I would be glad to get some hands on the testing part of this repository. Please do follow these steps to get down to testing.
 
 Testing
 -------
@@ -22,14 +23,14 @@ Testing
 
   Either use the Virtual Box Guest Addons Installation via. ISO,
     ```
-      #apt-get install linux-headers-generic
-      #mount /dev/cdrom0/ /tmp/cdrom
-      #cd /tmp/cdrom/
-      #./virtualbox 
+    #apt-get install linux-headers-generic
+    #mount /dev/cdrom0/ /tmp/cdrom
+    #cd /tmp/cdrom/
+    #./virtualbox 
     ```
   Or You May use Ubuntu Repositories for the same
   
     ```
-      #apt-get install linux-headers-generic
-      #apt-get --no-install-recommends install virtualbox-guest-additions
+    #apt-get install linux-headers-generic
+    #apt-get --no-install-recommends install virtualbox-guest-additions
     ```
