@@ -5,7 +5,7 @@ Some Shell scripts to automate a few Virtual Box related things to ease the proc
 
 Call For Contributors/Testors
 ------------------------
-*Some help on getting started refer: [How To Contribute](https://github.com/aptira/openstack-training-labs/edit/master/README.md)
+Some help on getting started refer: [How To Contribute](https://github.com/aptira/openstack-training-labs/blob/master/How%20to%20Contribute.md)
 
 
 Structure of this Repository (Tree)
