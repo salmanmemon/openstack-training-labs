@@ -21,11 +21,12 @@ Testing
   To install Virtual Box guest addons you need do the following :
 
   Either use the Virtual Box Guest Addons Installation via. ISO,
-    #mount /dev/cdrom0/ /tmp/cdrom
-    #cd /tmp/cdrom/
-    #./virtualbox 
+    
+      #mount /dev/cdrom0/ /tmp/cdrom
+      #cd /tmp/cdrom/
+      #./virtualbox 
     
   Or You May use Ubuntu Repositories for the same
   
-    #apt-get --no-install-recommends install virtualbox-guest-additions
     
+      #apt-get --no-install-recommends install virtualbox-guest-additions
