@@ -42,10 +42,33 @@ keystone() {
     # 1. Install Keystone
     apt-get -y keystone
 
-    # 2. Create MySQL Database
+    # 2. Create required MySQL Databases and Populate It.
+    echo "Enter MySQL root pass"
+    read MySQL_RPaSS
+    
+    # Create Database Keystone, Glance, 
+    mysql -u "root" -p"$MySQL_RPaSS" -e "create dabtabase keystone"
+    mysql -u "root" -p"$MySQL_RPaSS" -e "GRANT ALL ON keystone.* TO 'keystoneUser'@'%' IDENTIFIED BY 'keystonePass';"
+    mysql -u "root" -p"$MySQL_RPaSS" -e "create dabtabase glance"
+    mysql -u "root" -p"$MySQL_RPaSS" -e "GRANT ALL ON glance.* TO 'glanceUser'@'%' IDENTIFIED BY 'glancePass';"
+    mysql -u "root" -p"$MySQL_RPaSS" -e "create dabtabase quantum"
+    mysql -u "root" -p"$MySQL_RPaSS" -e "GRANT ALL ON quantum.* TO 'quantumUser'@'%' IDENTIFIED BY 'quantumPass';"
+    mysql -u "root" -p"$MySQL_RPaSS" -e "create dabtabase nova"
+    mysql -u "root" -p"$MySQL_RPaSS" -e "GRANT ALL ON nova.* TO 'novaUser'@'%' IDENTIFIED BY 'novaPass';"
+    mysql -u "root" -p"$MySQL_RPaSS" -e "create dabtabase cinder"
+    mysql -u "root" -p"$MySQL_RPaSS" -e "GRANT ALL ON cinder.* TO 'cinderUser'@'%' IDENTIFIED BY 'cinderPass';"
 
     # 3. Configure keystone scripts (copy the template file)
+    mv Templates/Keystone.conf /etc/Keystone.conf 
 
-    # 4. 
+    # 4. Restart The Keystone Services
+    service keystone restart
+
+    # 5. Populate the database using db_sync
+    keystone-manage db_sync
+
+    # Create User and grant access to the user
+    sh Scripts/keystone_basic.sh
+    sh Scripts/keystone_endpoints_basic.sh
 
 }
