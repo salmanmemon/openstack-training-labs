@@ -70,5 +70,10 @@ keystone() {
     # Create User and grant access to the user
     sh Scripts/keystone_basic.sh
     sh Scripts/keystone_endpoints_basic.sh
+    
+    # Load the Auth Creds
+    source /Scripts/Credentials.sh
 
+    # Check The Keystone Useres
+    keystone user-list
 }
