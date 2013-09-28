@@ -13,7 +13,7 @@
 #                                                                             #
 ###############################################################################
 
-# Note: You DoNot Need Internet for this due to the magic of --download-only
+# Note: You Do Not Need Internet for this due to the magic of --download-only
 echo "Internet connection is not required for this script to run"
 
 pre_keystone(){

@@ -37,4 +37,3 @@ Cinder() {
     
     # 6. Restart Cinder Related Services
     for i in $( ls /etc/init.d/cinder-* ); do sudo service /etc/init.d/$i restart; done
-}
