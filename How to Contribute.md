@@ -14,6 +14,8 @@ Testing
   * How to Test them??
     
     Testing these scripts is as simple as running them. Although some of the scripts need the required Input parameters.
+
+    If you do not want to run them manually then you may run the Scripts/test_scripts.sh file.
     
   **Note:** No Need for Virutalbox Guest Addons for testing the scripts as units.
 

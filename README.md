@@ -13,6 +13,7 @@ Structure of this Repository (Tree)
 
         |-- configure_networks.sh --  Virtual Box Network Configuration On Host (Host-Only Networks)
         |-- configure_vm.sh -- Configures Virtual Machine Properties
+        |-- How to Contribute.md
         |-- install.sh -- Install/Init Script (Brains of this **tool(?))**
         |-- LICENSE
         |-- multinode.sh -- For Multi Node Setup
@@ -24,11 +25,24 @@ Structure of this Repository (Tree)
         |   |-- Glance -- OpenStack Glance Related Scripts
         |   |   |-- Glance.sh
         |   |   `-- Templates -- Required Configuration Files
+        |   |       |-- cirros-0.3.1-x86_64-disk.img
+        |   |       |-- glance-api.conf
+        |       |       |-- glance-api-paste.ini
+        |   |       |-- glance-registry.conf
+        |   |       `-- glance-registry-paste.ini
         |   |-- Horizon -- OpenStack Horizon Related Scripts
         |   |   |-- Horizon.sh
-        |   |   `-- Templates -- Required Configuration Files
+        |   |   `-- Templates
         |   |-- Keystone -- OpenStack Keystone Related Scripts
         |   |   |-- Keystone.sh
+        |   |   |-- Scripts
+        |   |   |   |-- Credentials.sh
+        |   |   |   |-- keystone_basic.sh
+        |   |   |   `-- keystone_endpoints_basic.sh
+        |   |   `-- Templates -- Required Configuration Files
+        |   |       `-- Keystone.conf
+        |   |-- Neutron -- OpenStack Neutron (Quantum) Related Files
+        |   |   |-- Neutron.sh
         |   |   `-- Templates -- Required Configuration Files
         |   |-- Nova -- OpenStack Nova Related Scripts
         |   |   |-- Nova.sh
@@ -36,14 +50,12 @@ Structure of this Repository (Tree)
         |   |-- PostInstall -- Carries out Tasks after installing OpenStack
         |   |   |-- PostInstall.sh
         |   |   `-- Templates -- Required Configuration Files
-        |   |-- PreInstall -- Carries out tasks before installing OpenStack
+        |   |-- PreInstall -- Carries out Tasks before installing OpenStack
         |   |   |-- PreInstall.sh
         |   |   `-- Templates -- Required Configuration Files
         |   |       |-- interfaces-compute
         |   |       |-- interfaces-control
         |   |       |-- interfaces-network
         |   |       `-- interfaces-single
-        |   `-- Neutron -- OpenStack Networking Related Files
-        |       |-- Neutron.sh
-        |       `-- Templates -- Required Configuration Files
+        |   `-- test_scripts.sh
         `-- singlenode.sh
