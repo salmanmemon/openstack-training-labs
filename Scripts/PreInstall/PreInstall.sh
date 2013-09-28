@@ -46,7 +46,7 @@ configure_networks(){
         mv Templates/interfaces-single /etc/network/interfaces
 
     else
-        if [ "$1" == "multi-node"]; then
+        if [ "$1" == "multi-node" ]; then
             ## If it is multi node, check which type of node it is.
             case "$2" in 
                 "control")
