@@ -58,7 +58,7 @@ keystone() {
     mysql -u "root" -p"$MySQL_RPaSS" -e "GRANT ALL ON cinder.* TO 'cinderUser'@'%' IDENTIFIED BY 'cinderPass';"
 
     # 2. Configure keystone scripts (copy the template file)
-    mv Templates/Keystone.conf /etc/Keystone.conf 
+    cp --no-preserve=mode,ownership Templates/Keystone.conf /etc/keystone/keystone.conf 
 
     # 3. Restart The Keystone Services
     service keystone restart
@@ -71,7 +71,7 @@ keystone() {
     sh Scripts/keystone_endpoints_basic.sh
     
     # Load the Auth Creds
-    source /Scripts/Credentials.sh
+    source Scripts/Credentials.sh
 
     # Check The Keystone Useres
     keystone user-list
