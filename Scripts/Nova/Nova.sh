@@ -16,21 +16,46 @@
 # Note: You DoNot Need Internet for this due to the magic of --download-only
 echo "Internet connection is not required for this script to run"
 
-Nova() {
+Nova_SingleNode() {
 
-    # 1. Install Nova Components
-    apt-get install -y nova-api nova-cert novnc nova-consoleauth nova-scheduler nova-novncproxy nova-doc nova-conductor
+    # 1. Install Nova, OVS etc.
+    apt-get install -y kvm libvirt-bin pm-utils nova-api nova-cert novnc nova-consoleauth nova-scheduler nova-novncproxy nova-doc nova-conductor nova-compute-kvm    
+
+    # 2. Configure Nova Configuration files
+    mv Templates/SingleNode/nova/api-paste.ini /etc/nova/api-paste.ini
+    mv Templates/SingleNode/nova/nova.conf /etc/nova/nova.conf
+    mv Templates/SingleNode/libvirt/qemu.conf /etc/libvirt/qemu.conf
+    mv Templates/SingleNode/libvirt/libvirtd.conf /etc/libvirt/libvirtd.conf
+    mv Templates/SingleNode/libvirt/libvirt-bin.conf /etc/init/libvirt-bin.conf
+    mv Templates/SingleNode/libvirt/libvirt-bin /etc/default/libvirt-bin
     
-    # 2. Modify Nova Configs
-    mv Templates/api-paste.ini /etc/nova/api-paste.ini
-    mv Templates/nova.conf /etc/nova/nova.conf
-    
-    # 3. Sync Database
+    # Destroy Default Virtual Bridges
+    virsh net-destroy default
+    virsh net-undefine default
+
+    service dbus restart && service libvirt-bin restart
+
+    # 3. Synch Database
     nova-manage db sync
 
     # 4. Restart Nova Services
     for i in $( ls /etc/init.d/nova-* ); do sudo service /etc/init.d/$i restart; done
-    
-    # 5. Check If Nova Services are running
+
+    # 5. This is just because I like to see the smiley faces :)
     nova-manage service list
 }
+
+Nova_MultiNode() {
+    
+    # Single Node For Now.
+    Nova_SingleNode
+
+}
+
+# For Now its just single Node
+
+if [ "$1" == "Single" ]; then
+    Nova_SingleNode
+else
+    Nova_MultiNode
+fi

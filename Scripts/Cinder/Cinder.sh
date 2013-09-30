@@ -16,11 +16,11 @@
 # Note: You DoNot Need Internet for this due to the magic of --download-only
 echo "Internet connection is not required for this script to run"
 
-Cinder() {
+Install_Cinder() {
 
     # 1. Install Cinder
     apt-get install -y cinder-api cinder-scheduler cinder-volume iscsitarget open-iscsi iscsitarget-dkms
-
+    
     # 2. Configure iscsi services
     sed -i 's/false/true/g' /etc/default/iscsitarget
 
@@ -29,11 +29,19 @@ Cinder() {
     service open-iscsi start
 
     # 4. Configure the templates
-    cinder-manage db sync
+    mv Templates/api-paste.ini /etc/cinder/api-paste.ini
+    mv Templates/cinder.conf /etc/cinder/cinder.conf
 
+    # 5. MySQL database
+    cinder-manage db sync
+    
     # 5. Format the disks -- see if something else is available instead of
     # fdisk
-    format_volumes()
+    format_volumes() # Need Expert Advice on this ....
+    
+    pvcreate /dev/sdb
+    vgcreate cinder-volumes /dev/sdb
     
     # 6. Restart Cinder Related Services
     for i in $( ls /etc/init.d/cinder-* ); do sudo service /etc/init.d/$i restart; done
+}
