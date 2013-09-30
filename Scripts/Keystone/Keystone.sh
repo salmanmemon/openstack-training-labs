@@ -77,3 +77,6 @@ keystone() {
     # Check The Keystone Useres
     keystone user-list
 }
+
+pre_keystone
+keystone

@@ -46,7 +46,7 @@ configure_networks(){
         mv Templates/interfaces-single /etc/network/interfaces
 
     else
-        if [ "$1" == "multi-node"]; then
+        if [ "$1" == "multi-node" ]; then
             ## If it is multi node, check which type of node it is.
             case "$2" in 
                 "control")
@@ -67,9 +67,12 @@ configure_networks(){
                     ;;
                 *)
                     echo "Invalid Input, cannot figure out which node this is. Error!!!"
+                    exit
             esac
         fi
     fi
+
+    service networking restart
 }
 
 # Get (apt-get) all the packages and download them but not install them using
@@ -91,9 +94,12 @@ single_node() {
 }
 
 multi_node(){
+
+    # For now redirecting to single node :D
+    single_node
     # $2 will be the node defination -- like control node, compute node,
     # network node.
-    configure_networks
+    #configure_networks
     # Install packages as per the node defination ...
 
     # TO BE DONE.

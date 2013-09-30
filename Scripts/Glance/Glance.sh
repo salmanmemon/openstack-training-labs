@@ -39,3 +39,5 @@ glance(){
     #5. Check The Image
     glance image-list
 }
+
+glance
