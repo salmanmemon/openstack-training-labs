@@ -39,7 +39,7 @@ pre_keystone(){
     sysctl net.ipv4.ip_forward=1
 }
 
-keystone() {
+keystone_conf() {
 
     # 1. Install Keystone
     apt-get -y install keystone
@@ -85,6 +85,6 @@ read MySQL_RPaSS
 echo "Running pre_keystone"
 pre_keystone
 
-echo "Running keystone"
-keystone
+echo "Running keystone_conf"
+keystone_conf
 
