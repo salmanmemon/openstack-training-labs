@@ -15,7 +15,7 @@
 # Note: You DoNot Need Internet for this due to the magic of --download-only
 echo "Internet connection is not required for this script to run"
 
-glance(){
+glance_conf(){
 
     #1. Install Glance
     apt-get install -y glance
@@ -39,3 +39,6 @@ glance(){
     #5. Check The Image
     glance image-list
 }
+
+echo "Running Glance Configuration"
+glance_conf
