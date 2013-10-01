@@ -21,10 +21,10 @@ glance_conf(){
     apt-get install -y glance
 
     #2. Configure the Config Files
-    mv Templates/glance-api.conf /etc/glance/glance-api.conf
-    mv Templates/glance-api-paste.ini /etc/glance/glance-api-paste.ini
-    mv Templates/glance-registry-paste.ini /etc/glance/glance-registry-paste.ini
-    mv Templates/glance-registry.conf /etc/glance/glance-registry.conf
+    cp --no-preserve=mode,ownership Templates/glance-api.conf /etc/glance/glance-api.conf
+    cp --no-preserve=mode,ownership Templates/glance-api-paste.ini /etc/glance/glance-api-paste.ini
+    cp --no-preserve=mode,ownership Templates/glance-registry-paste.ini /etc/glance/glance-registry-paste.ini
+    cp --no-preserve=mode,ownership Templates/glance-registry.conf /etc/glance/glance-registry.conf
 
     #3. Restart Glance Services
     service glance-api restart
