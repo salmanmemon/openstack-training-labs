@@ -19,6 +19,8 @@ echo "Internet connection is not required for this script to run"
 pre_keystone(){
     
     # 1. Database - MySQL and Python MySQL DB Connector
+    debconf-set-selections  <<< 'mysql-server mysql-server/root_password password '$MySQL_RPaSS''
+    debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password '$MySQL_RPaSS''
     apt-get install -y mysql-server python-mysqldb
 
     # Configure MySQL to listen to other all IP addresses
@@ -37,34 +39,31 @@ pre_keystone(){
     sysctl net.ipv4.ip_forward=1
 }
 
-keystone() {
+keystone_conf() {
 
     # 1. Install Keystone
-    apt-get -y keystone
+    apt-get -y install keystone
 
-    # 2. Create required MySQL Databases and Populate It.
-    echo "Enter MySQL root pass"
-    read MySQL_RPaSS
     
     # Create Database Keystone, Glance, 
-    mysql -u "root" -p"$MySQL_RPaSS" -e "create dabtabase keystone"
+    mysql -u "root" -p"$MySQL_RPaSS" -e "create database keystone"
     mysql -u "root" -p"$MySQL_RPaSS" -e "GRANT ALL ON keystone.* TO 'keystoneUser'@'%' IDENTIFIED BY 'keystonePass';"
-    mysql -u "root" -p"$MySQL_RPaSS" -e "create dabtabase glance"
+    mysql -u "root" -p"$MySQL_RPaSS" -e "create database glance"
     mysql -u "root" -p"$MySQL_RPaSS" -e "GRANT ALL ON glance.* TO 'glanceUser'@'%' IDENTIFIED BY 'glancePass';"
-    mysql -u "root" -p"$MySQL_RPaSS" -e "create dabtabase quantum"
+    mysql -u "root" -p"$MySQL_RPaSS" -e "create database quantum"
     mysql -u "root" -p"$MySQL_RPaSS" -e "GRANT ALL ON quantum.* TO 'quantumUser'@'%' IDENTIFIED BY 'quantumPass';"
-    mysql -u "root" -p"$MySQL_RPaSS" -e "create dabtabase nova"
+    mysql -u "root" -p"$MySQL_RPaSS" -e "create database nova"
     mysql -u "root" -p"$MySQL_RPaSS" -e "GRANT ALL ON nova.* TO 'novaUser'@'%' IDENTIFIED BY 'novaPass';"
-    mysql -u "root" -p"$MySQL_RPaSS" -e "create dabtabase cinder"
+    mysql -u "root" -p"$MySQL_RPaSS" -e "create database cinder"
     mysql -u "root" -p"$MySQL_RPaSS" -e "GRANT ALL ON cinder.* TO 'cinderUser'@'%' IDENTIFIED BY 'cinderPass';"
 
-    # 3. Configure keystone scripts (copy the template file)
-    mv Templates/Keystone.conf /etc/Keystone.conf 
+    # 2. Configure keystone scripts (copy the template file)
+    cp --no-preserve=mode,ownership Templates/Keystone.conf /etc/keystone/keystone.conf 
 
-    # 4. Restart The Keystone Services
+    # 3. Restart The Keystone Services
     service keystone restart
 
-    # 5. Populate the database using db_sync
+    # 4. Populate the database using db_sync
     keystone-manage db_sync
 
     # Create User and grant access to the user
@@ -72,8 +71,20 @@ keystone() {
     sh Scripts/keystone_endpoints_basic.sh
     
     # Load the Auth Creds
-    source /Scripts/Credentials.sh
+    source Scripts/Credentials.sh
 
     # Check The Keystone Useres
     keystone user-list
 }
+
+
+# Create required MySQL Databases and Populate It.
+echo "Enter MySQL root pass"
+read MySQL_RPaSS
+
+echo "Running pre_keystone"
+pre_keystone
+
+echo "Running keystone_conf"
+keystone_conf
+
