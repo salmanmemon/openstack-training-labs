@@ -19,7 +19,7 @@ echo "Internet connection is not required for this script to run"
 Neutron_SingleNode() {
 
     # 1. Install Neutron, OVS etc.
-    apt-get -y quantum-server openvswitch-switch openvswitch-datapath-dkms quantum-plugin-openvswitch quantum-plugin-openvswitch-agent dnsmasq quantum-dhcp-agent quantum-l3-agent
+    apt-get install -y quantum-server openvswitch-switch openvswitch-datapath-dkms quantum-plugin-openvswitch quantum-plugin-openvswitch-agent dnsmasq quantum-dhcp-agent quantum-l3-agent
     
     #br-int will be used for VM integration
     ovs-vsctl add-br br-int
@@ -31,13 +31,13 @@ Neutron_SingleNode() {
     #ptables --append FORWARD --in-interface br-ex -j ACCEPT
 
     # 2. Configure Quantum Configuration files
-    mv Templates/SingleNode/plugins/ovs_quantum_plugin.ini /etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini
-    mv Templates/SingleNode/api-paste.ini /etc/quantum/api-paste.ini
-    mv Templates/SingleNode/quantum.conf /etc/quantum/quantum.conf
-    mv Templates/SingleNode/metadata_agent.ini /etc/quantum/metadata_agent.ini
+    cp --no-preserve=mode,ownership Templates/SingleNode/plugins/ovs_quantum_plugin.ini /etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini
+    cp --no-preserve=mode,ownership Templates/SingleNode/api-paste.ini /etc/quantum/api-paste.ini
+    cp --no-preserve=mode,ownership Templates/SingleNode/quantum.conf /etc/quantum/quantum.conf
+    cp --no-preserve=mode,ownership Templates/SingleNode/metadata_agent.ini /etc/quantum/metadata_agent.ini
     
     # 3. Restart Quantum Server
-    for i in $( ls /etc/init.d/quantum-* ); do sudo service /etc/init.d/$i restart; done
+    for i in $( ls /etc/init.d/quantum-* ); do sudo $i restart; done
     service dnsmasq restart
 }
 

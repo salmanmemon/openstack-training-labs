@@ -45,28 +45,28 @@ if [ "$cont" == "Y" -o "$cont" == "y" ]; then
     # Missing Exception Handlers :((, would have been very handy here
     echo "You Pressed Yes."
     echo -e "${BBla}Testing PreInstall"
-    sh PreInstall/PreInstall.sh
+    bash PreInstall/PreInstall.sh
 
     echo -e "${BBla}Testing Keystone"
-    sh Keystone/Keystone.sh
+    bash Keystone/Keystone.sh
 
     echo -e "${BBla}Testing Glance"
-    sh Glance/Glance.sh
+    bash Glance/Glance.sh
 
     echo -e "${BBla}Testing Cinder"
-    sh Cinder/Cinder.sh
+    bash Cinder/Cinder.sh
 
     echo -e "${BBla}Testing Neutron"
-    sh Neutron/Neutron.sh
+    bash Neutron/Neutron.sh
 
     echo -e "${BBla}Testing Nova"
-    sh Nova/Nova.sh
+    bash Nova/Nova.sh
 
     echo -e "${BBla}Testing Horizon"
-    Horizon/Horizon.sh
+    bash Horizon/Horizon.sh
 
     echo -e "${BBla}Testing PostInstall"
-    PostInstall/PostInstall.sh
+    bash PostInstall/PostInstall.sh
 fi
 echo -e "Mostly the tests run fine ... although Im not sure !!! Please Read the Terminal Messages Carefully."
 echo -e "${RCol}"

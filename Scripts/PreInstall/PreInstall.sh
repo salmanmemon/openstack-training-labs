@@ -83,19 +83,21 @@ configure_networks(){
 # internet while deploying openstack.
 
 single_node() {
-    configure_networks
     #Install All package on the given Virtual Machine ...
     apt-get install -y --download-only mysql-server python-mysqldb rabbitmq-server ntp vlan bridge-utils \
         keystone glance openvswitch-switch openvswitch-datapath-dkms quantum-server quantum-plugin-openvswitch \
         quantum-plugin-openvswitch-agent dnsmasq quantum-dhcp-agent quantum-l3-agent cpu-checker kvm libvirt-bin \
         pm-utils nova-api nova-cert novnc nova-consoleauth nova-scheduler nova-novncproxy nova-doc nova-conductor \
         nova-compute-kvm cinder-api cinder-scheduler cinder-volume iscsitarget open-iscsi iscsitarget-dkms openstack-dashboard memcached
+    
+    configure_networks $1 $2
+
 }
 
 multi_node(){
     # $2 will be the node defination -- like control node, compute node,
     # network node.
-    configure_networks
+    configure_networks $1 $2
     # Install packages as per the node defination ...
 
     # TO BE DONE.
@@ -105,10 +107,10 @@ multi_node(){
 }
 
 if [ "$1" == "single-node" ]; then
-    single_node
+    single_node $1 $2
 else
     if [ "$1" == "multi-node" ]; then
-        multi_node
+        multi_node $1 $2
     else
         echo "invalid option ... cannot proceede"
     fi

@@ -22,12 +22,12 @@ Nova_SingleNode() {
     apt-get install -y kvm libvirt-bin pm-utils nova-api nova-cert novnc nova-consoleauth nova-scheduler nova-novncproxy nova-doc nova-conductor nova-compute-kvm    
 
     # 2. Configure Nova Configuration files
-    mv Templates/SingleNode/nova/api-paste.ini /etc/nova/api-paste.ini
-    mv Templates/SingleNode/nova/nova.conf /etc/nova/nova.conf
-    mv Templates/SingleNode/libvirt/qemu.conf /etc/libvirt/qemu.conf
-    mv Templates/SingleNode/libvirt/libvirtd.conf /etc/libvirt/libvirtd.conf
-    mv Templates/SingleNode/libvirt/libvirt-bin.conf /etc/init/libvirt-bin.conf
-    mv Templates/SingleNode/libvirt/libvirt-bin /etc/default/libvirt-bin
+    cp --no-preserve=mode,ownership Templates/SingleNode/nova/api-paste.ini /etc/nova/api-paste.ini
+    cp --no-preserve=mode,ownership Templates/SingleNode/nova/nova.conf /etc/nova/nova.conf
+    cp --no-preserve=mode,ownership Templates/SingleNode/libvirt/qemu.conf /etc/libvirt/qemu.conf
+    cp --no-preserve=mode,ownership Templates/SingleNode/libvirt/libvirtd.conf /etc/libvirt/libvirtd.conf
+    cp --no-preserve=mode,ownership Templates/SingleNode/libvirt/libvirt-bin.conf /etc/init/libvirt-bin.conf
+    cp --no-preserve=mode,ownership Templates/SingleNode/libvirt/libvirt-bin /etc/default/libvirt-bin
     
     # Destroy Default Virtual Bridges
     virsh net-destroy default
@@ -39,7 +39,7 @@ Nova_SingleNode() {
     nova-manage db sync
 
     # 4. Restart Nova Services
-    for i in $( ls /etc/init.d/nova-* ); do sudo service /etc/init.d/$i restart; done
+    for i in $( ls /etc/init.d/nova-* ); do sudo $i restart; done
 
     # 5. This is just because I like to see the smiley faces :)
     nova-manage service list

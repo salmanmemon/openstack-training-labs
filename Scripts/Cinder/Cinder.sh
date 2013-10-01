@@ -29,8 +29,8 @@ Install_Cinder() {
     service open-iscsi start
 
     # 4. Configure the templates
-    mv Templates/api-paste.ini /etc/cinder/api-paste.ini
-    mv Templates/cinder.conf /etc/cinder/cinder.conf
+    cp --no-preserve=mode,ownership Templates/api-paste.ini /etc/cinder/api-paste.ini
+    cp --no-preserve=mode,ownership Templates/cinder.conf /etc/cinder/cinder.conf
 
     # 5. MySQL database
     cinder-manage db sync
@@ -43,5 +43,5 @@ Install_Cinder() {
     vgcreate cinder-volumes /dev/sdb
     
     # 6. Restart Cinder Related Services
-    for i in $( ls /etc/init.d/cinder-* ); do sudo service /etc/init.d/$i restart; done
+    for i in $( ls /etc/init.d/cinder-* ); do $i restart; done
 }
