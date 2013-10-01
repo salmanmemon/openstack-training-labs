@@ -34,7 +34,8 @@ glance_conf(){
     glance-manage db_sync
 
     #4. Upload Cirros Image to Glance
-    glance image-create --name myFirstImage --is-public true --container-format bare --disk-format qcow2 --location Templates/cirros-0.3.1-x86_64-disk.img
+    source ../Keystone/Scripts/Credentials.sh
+    glance image-create --name myFirstImage --is-public true --container-format bare --disk-format qcow2 < Templates/cirros-0.3.1-x86_64-disk.img
 
     #5. Check The Image
     glance image-list
