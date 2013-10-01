@@ -70,6 +70,8 @@ configure_networks(){
             esac
         fi
     fi
+
+    service networking restart
 }
 
 # Get (apt-get) all the packages and download them but not install them using
